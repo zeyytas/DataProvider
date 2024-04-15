@@ -1,19 +1,15 @@
-#Introduction
-
-The Data Provider helps hotels manage booking and cancellation events easily. It stores all event information and provides simple ways for hotels to access and add new events. 
-
-#Installation Guide
+# Installation Guide
 
 This guide will help you set up and run the application locally using Docker, and it will also cover endpoints and running tests.
 
-##Prerequisites
+## Prerequisites
 Docker installed on your machine.
  
-##Installation Steps
+## Installation Steps
 1. Clone the Repository: Clone the repository to your local machine.
 
     ```shell
-    git clone <repository_url>
+    git clone https://github.com/zeyytas/DataProvider.git
     ```
 
 2. Navigate to the Project Directory: Go to the root directory of the project.
@@ -23,35 +19,27 @@ Docker installed on your machine.
    ```
 
 3. Build Docker Images: Build the Docker images using Docker Compose.
-    
+   
    ```shell
    docker-compose build
    ```
-PS: HERE PLEASE FOLLOW POSTGRESQL SETUP STEPS BEFORE CONTINUE WITH 5.  
+**PS: HERE PLEASE FOLLOW POSTGRESQL SETUP STEPS BEFORE CONTINUE WITH 4.**
 
-4. Create external network:
-   
-   ```shell
-   docker network create dataprovider_default
-   ```
-
-5. Run Docker Containers: Start the Docker containers
+4. Run Docker Containers: Start the Docker containers
 
    ```shell
    docker-compose up
    ```
    
-6. Create database: Once the service is running, you need to create the database dashboarddb.:
+5. Create database: Once the service is running, you need to create the database dashboarddb.:
 
    ```shell
    docker-compose exec db createdb -U postgres dataproviderdb
    ```
 
-7. Access the Application: The application should now be accessible at _http://localhost:8000_.
+6. Access the Application: The application should now be accessible at _http://localhost:8000_.
 
 ## PostgreSQL Setup
-
-### Creating a PostgreSQL User
 
 If you're working with PostgreSQL for the first time, you may need to create a PostgreSQL user with appropriate permissions.   
 Follow these steps to create a new user:
@@ -74,9 +62,9 @@ Follow these steps to create a new user:
    ALTER USER admin CREATEDB;
    ```
 
-##Endpoints
+## Endpoints
 
-###1. GET /api/v1/events/  
+### 1. GET /api/v1/events/  
 Retrieve a list of events happened within a particular hotel.  
   
 **Example Request:**  
@@ -84,7 +72,7 @@ GET /api/v1/events?hotel_id=1&rpg_status=1&night_of_stay__gte=2022-01-01
 
 **Query Parameters**
 
-1. **hotel_id**: _string_  
+1. **hotel_id**: _integer_  
    Specifies the ID of the hotel for which events should be retrieved.
 
 2. **updated__gte**: _string<date-time>_  
@@ -133,7 +121,7 @@ GET /api/v1/events?hotel_id=1&rpg_status=1&night_of_stay__gte=2022-01-01
 }
 ```
 
-###2. POST /api/v1/events/  
+### 2. POST /api/v1/events/  
 Creates a new event.  
 **Example Body:**    
 ```json
@@ -156,7 +144,7 @@ Creates a new event.
 }
 ```
 
-###3. POST /api/token/  
+### 3. POST /api/token/  
 Handles the generation and refreshing of access tokens.
 
 **Body must be:**
@@ -175,7 +163,7 @@ Handles the generation and refreshing of access tokens.
 }
 ```
 
-##Running Tests  
+## Running Tests  
 
 To ensure the correctness and stability of the application, automated tests are provided. These tests cover various aspects of the application, including API endpoints, models, and integration between different components.  
 
@@ -189,7 +177,7 @@ To run tests, follow these steps:
    docker-compose exec web pytest event/tests/tests.py
    ```
 
-##Additional Information
+## Additional Information
 - The application uses Django Rest Framework for API development.
 - PostgreSQL is used as the database, RabbitMQ for message queuing, and Celery for asynchronous task processing.
 - The Docker Compose configuration ensures that all services required by the application are running together seamlessly.
