@@ -4,14 +4,13 @@ info:
   description: API for managing events
   version: 1.0.0
 servers:
-  - url: http://127.0.0.1:8000/api/v1/
+  - url: http://127.0.0.1:8000
     description: Local development server
 paths:
   /api/token/:
     post:
       summary: Obtain JWT token
-      description: |
-        Obtain a JWT token by providing valid credentials.
+      description: Obtain a JWT token by providing valid credentials.
       requestBody:
         required: true
         content:
@@ -22,10 +21,12 @@ paths:
                 username:
                   type: string
                   description: User's username
+                  default: admin
                 password:
                   type: string
                   format: password
                   description: User's password
+                  default: admin
       responses:
         '200':
           description: JWT token obtained successfully
@@ -40,7 +41,7 @@ paths:
                   refresh:
                     type: string
                     description: JWT refresh token
-  /events:
+  /api/v1/events/:
     get:
       summary: Get events
       description: Retrieve a list of events.
@@ -61,7 +62,10 @@ paths:
           name: rpg_status
           description: Specifies the status of the event to filter by. The value 1 indicates a booking event, and 2 indicates a cancellation event.
           schema:
-            type: string
+            type: integer
+            enum:
+              - 1
+              - 2
         - in: query
           name: room_id
           description: Specifies the ID of the room associated with the event to filter by.
