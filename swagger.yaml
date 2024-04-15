@@ -1,0 +1,175 @@
+openapi: 3.0.0
+info:
+  title: Event API
+  description: API for managing events
+  version: 1.0.0
+servers:
+  - url: http://127.0.0.1:8000/api/v1/
+    description: Local development server
+paths:
+  /api/token/:
+    post:
+      summary: Obtain JWT token
+      description: |
+        Obtain a JWT token by providing valid credentials.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                  description: User's username
+                password:
+                  type: string
+                  format: password
+                  description: User's password
+      responses:
+        '200':
+          description: JWT token obtained successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  access:
+                    type: string
+                    description: JWT access token
+                  refresh:
+                    type: string
+                    description: JWT refresh token
+  /events:
+    get:
+      summary: Get events
+      description: Retrieve a list of events.
+      parameters:
+        - in: query
+          name: updated__gte
+          description: Filters events to include only those that occurred on or after the specified date and time.
+          schema:
+            type: string
+            format: date-time
+        - in: query
+          name: updated__lte
+          description: Filters events to include only those that occurred on or before the specified date and time.
+          schema:
+            type: string
+            format: date-time
+        - in: query
+          name: rpg_status
+          description: Specifies the status of the event to filter by. The value 1 indicates a booking event, and 2 indicates a cancellation event.
+          schema:
+            type: string
+        - in: query
+          name: room_id
+          description: Specifies the ID of the room associated with the event to filter by.
+          schema:
+            type: string
+            format: uuid
+        - in: query
+          name: hotel_id
+          description: Specifies the ID of the hotel for which events should be retrieved.
+          schema:
+            type: string
+            format: integer
+        - in: query
+          name: night_of_stay__gte
+          description: Filters events to include only those with a night of stay on or after the specified date.
+          schema:
+            type: string
+            format: date
+        - in: query
+          name: night_of_stay__lte
+          description: Filters events to include only those with a night of stay on or before the specified date.
+          schema:
+            type: string
+            format: date
+      responses:
+        '200':
+          description: A list of events
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedEventList'
+    post:
+      summary: Create an event
+      description: Create a new event.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EventInput'
+      responses:
+        '201':
+          description: The created event
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event'
+components:
+  schemas:
+    PaginatedEventList:
+      type: object
+      properties:
+        count:
+          type: integer
+          description: Total number of events in the collection.
+        next:
+          type: string
+          description: Link to the next page of events, if available.
+        previous:
+          type: string
+          description: Link to the previous page of events, if available.
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Event'
+    Event:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique identifier for the event.
+        hotel_id:
+          type: integer
+          description: Unique identifier for the hotel associated with the event.
+        timestamp:
+          type: string
+          format: date-time
+          description: Timestamp of when the event occurred.
+        rpg_status:
+          type: integer
+          description: Status of the event.
+        room_id:
+          type: string
+          description: Unique identifier for the room associated with the event.
+        night_of_stay:
+          type: string
+          format: date
+          description: Date of the stay associated with the event.
+
+    EventInput:
+      type: object
+      properties:
+        hotel_id:
+          type: integer
+          description: The ID of the hotel associated with the event
+        rpg_status:
+          type: integer
+          description: The RPG status of the event
+        room_id:
+          type: string
+          format: uuid
+          description: The room ID associated with the event
+        night_of_stay:
+          type: string
+          format: date
+          description: The night of stay for the event
+      required:
+        - hotel_id
+        - rpg_status
+        - room_id
+        - night_of_stay
