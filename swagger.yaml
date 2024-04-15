@@ -4,7 +4,7 @@ info:
   description: API for managing events
   version: 1.0.0
 servers:
-  - url: http://127.0.0.1:8000
+  - url: http://127.0.0.1:8001
     description: Local development server
 paths:
   /api/token/:
