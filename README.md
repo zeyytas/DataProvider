@@ -161,7 +161,10 @@ Handles the generation and refreshing of access tokens.
     "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcxMzE4Njg2MSwiaWF0IjoxNzEzMTAwNDYxLCJqdGkiOiJjODI3NzYyMDBkMzA0Njg0YWQ2NzZmNjY0MzQ1ZWQwMyIsInVzZXJfaWQiOjF9.gnFGZyHILf9lTjtljThKn3XujsbS_RfthRL-t2TeTiQ",
     "access": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzEzMTAwNzYxLCJpYXQiOjE3MTMxMDA0NjEsImp0aSI6ImUwNzg3NDc4ODdlZTRlMGI4OTAwOTZmYjhmNWNmZmE1IiwidXNlcl9pZCI6MX0.KCukTQwz47jtu61YaWLZQ-N-czG-BvKFX_16KsONgNI"
 }
-```
+```  
+### Swagger Documentation
+
+You can view the Swagger documentation for this project [here](/swagger.yaml)  
 
 ## Running Tests  
 
