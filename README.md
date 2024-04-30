@@ -23,52 +23,44 @@ Docker installed on your machine.
    ```shell
    docker-compose build
    ```
-**PS: HERE PLEASE FOLLOW POSTGRESQL SETUP STEPS BEFORE CONTINUE WITH 4.**
 
-4. Run Docker Containers: Start the Docker containers
+4. If you're working with PostgreSQL for the first time, you may need to create a PostgreSQL user with appropriate permissions.
+
+   1. Open a terminal or command prompt.
+   2. Connect to the PostgreSQL server using the `psql` command-line utility. You may need to provide the PostgreSQL administrator password.
+
+      ```bash
+      psql -U postgres
+      ```
+   3. Once connected, you can create a new user with the following SQL command
+
+      ```bash
+      CREATE USER admin WITH PASSWORD admin;
+      ```
+
+   4. Grant necessary permissions to the user.
+
+      ```bash
+      ALTER USER admin CREATEDB;  
+
+5. Run Docker Containers: Start the Docker containers
 
    ```shell
    docker-compose up
    ```
    
-5. Create database: Once the service is running, you need to create the database dashboarddb.:
+6. Create database: Once the service is running, you need to create the database dashboarddb.:
 
    ```shell
    docker-compose exec db createdb -U postgres dataproviderdb
    ```
 
-6. Access the Application: The application should now be accessible at _http://localhost:8000_.
-
-## PostgreSQL Setup
-
-If you're working with PostgreSQL for the first time, you may need to create a PostgreSQL user with appropriate permissions.   
-Follow these steps to create a new user:
-
-1. Open a terminal or command prompt.
-2. Connect to the PostgreSQL server using the `psql` command-line utility. You may need to provide the PostgreSQL administrator password.
-
-   ```bash
-   psql -U postgres
-   ```
-3. Once connected, you can create a new user with the following SQL command
-
-   ```bash
-   CREATE USER admin WITH PASSWORD admin;
-   ```
-
-4. Grant necessary permissions to the user.
-
-   ```bash
-   ALTER USER admin CREATEDB;
-   ```
+7. Access the Application: The application should now be accessible at _http://localhost:8000_.
 
 ## Endpoints
 
 ### 1. GET /api/v1/events/  
 Retrieve a list of events happened within a particular hotel.  
-  
-**Example Request:**  
-GET /api/v1/events?hotel_id=1&rpg_status=1&night_of_stay__gte=2022-01-01
 
 **Query Parameters**
 
@@ -158,8 +150,8 @@ Handles the generation and refreshing of access tokens.
 **Example Response:**    
 ```json
 {
-    "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcxMzE4Njg2MSwiaWF0IjoxNzEzMTAwNDYxLCJqdGkiOiJjODI3NzYyMDBkMzA0Njg0YWQ2NzZmNjY0MzQ1ZWQwMyIsInVzZXJfaWQiOjF9.gnFGZyHILf9lTjtljThKn3XujsbS_RfthRL-t2TeTiQ",
-    "access": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzEzMTAwNzYxLCJpYXQiOjE3MTMxMDA0NjEsImp0aSI6ImUwNzg3NDc4ODdlZTRlMGI4OTAwOTZmYjhmNWNmZmE1IiwidXNlcl9pZCI6MX0.KCukTQwz47jtu61YaWLZQ-N-czG-BvKFX_16KsONgNI"
+    "refresh": <refresh-token>,
+    "access": <access-token>
 }
 ```  
 ### Swagger Documentation
