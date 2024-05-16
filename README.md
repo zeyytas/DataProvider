@@ -150,8 +150,8 @@ Handles the generation and refreshing of access tokens.
 **Example Response:**    
 ```json
 {
-    "refresh": <refresh-token>,
-    "access": <access-token>
+    "refresh": "<refresh-token>",
+    "access": "<access-token>"
 }
 ```  
 ### Swagger Documentation
